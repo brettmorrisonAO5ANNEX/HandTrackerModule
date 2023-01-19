@@ -4,14 +4,14 @@ import time
 
 
 class handDetector():
-    def __init__(self, mode=False, maxHands=2, detectionCon=0.5, trackCon=0.5):
+    def __init__(self, mode=False, maxHands=2, modelComplexity=1, detectionCon=0.5, trackCon=0.5):
         self.mode = mode
         self.maxHands = maxHands
+        self.modelComplex = modelComplexity
         self.detectionCon = detectionCon
         self.trackCon = trackCon
-
         self.mpHands = mp.solutions.hands
-        self.hands = self.mpHands.Hands(self.mode, self.maxHands, self.detectionCon, self.trackCon)
+        self.hands = self.mpHands.Hands(self.mode, self.maxHands, self.modelComplex, self.detectionCon, self.trackCon)
         self.mpDraw = mp.solutions.drawing_utils
 
     def findHands(self, img, draw=True):
@@ -34,7 +34,7 @@ class handDetector():
                 cx, cy = int(lm.x * w), int(lm.y * h)
                 lmList.append([id, cx, cy])
                 if draw:
-                    cv2.circle(img, (cx, cy), 25, (255, 0, 255), cv2.FILLED)
+                    cv2.circle(img, (cx, cy), 15, (255, 0, 255), cv2.FILLED)
 
         return lmList
 
